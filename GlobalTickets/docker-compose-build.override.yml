@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  globaltickets.web:
+    image: globalticketsacr.azurecr.io/globaltickets.web:1
+ 
+  globaltickets.services.eventcatalog:
+    image: globalticketsacr.azurecr.io/globaltickets.services.eventcatalog:1
+
+  globaltickets.services.shoppingbasket:
+    image: globalticketsacr.azurecr.io/globaltickets.services.shoppingbasket:1
+  
+  external.paymentgateway:
+    image: globalticketsacr.azurecr.io/external.paymentgateway:1
+  
+  globaltickets.web.bff:
+    image: globalticketsacr.azurecr.io/globaltickets.web.bff:1
+  
+  globaltickets.gateway.mobilebff:
+    image: globalticketsacr.azurecr.io/globaltickets.gateway.mobilebff:1
+  
+  globaltickets.gateway.webbff:
+    image: globalticketsacr.azurecr.io/globaltickets.gateway.webbff:1
+  
+  globaltickets.services.discount:
+    image: globalticketsacr.azurecr.io/globaltickets.services.discount:1
+  
+  globaltickets.services.marketing:
+    image: globalticketsacr.azurecr.io/globaltickets.services.marketing:1
+  
+  globaltickets.services.ordering:
+    image: globalticketsacr.azurecr.io/globaltickets.services.ordering:1
+  
+  globaltickets.services.payment:
+    image: globalticketsacr.azurecr.io/globaltickets.services.payment:1
+  

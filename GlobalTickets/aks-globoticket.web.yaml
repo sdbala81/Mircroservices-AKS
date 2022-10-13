@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-globaltickets-web
+  labels:
+    version: dev
+    product: globaltickets-web
+spec:
+  selector:
+    app: globaltickets-web
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-globaltickets-web
+spec:
+  replicas: 10
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: globaltickets-web
+  template:
+    metadata:
+      labels:
+        app: globaltickets-web
+    spec:
+      containers:
+      - name: globaltickets-web
+        image: globoticketacr.azurecr.io/globaltickets.web:#{Build.BuildId}#
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_URLS
+          value: http://+:80;https://+:443
+        - name: base64pfxfile
+          valueFrom:
+            secretKeyRef:
+              name: base64pfxfile
+              key: file
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+          valueFrom: 
+            secretKeyRef:
+              name: pfx-password
+              key: pwd
+        - name: ApiConfigs__EventCatalog__Uri
+          value: http://svc-globaltickets-services-eventcatalog
+        - name: ApiConfigs__ShoppingBasket__Uri
+          value: http://svc-globaltickets-services-shoppingbasket
+        - name: ApiConfigs__Payment__Uri
+          value: http://svc-globaltickets-services-payment
+        - name: ApiConfigs__Order__Uri
+          value: http://svc-globaltickets-services-ordering
+        - name: ApiConfigs__Marketing__Uri
+          value: http://svc-globaltickets-services-marketing
+        - name: ApiConfigs__Eventcatalog__Uri
+          value: http://svc-globaltickets-services-eventcatalog
+        - name:  ApiConfigs__Discount__Uri
+          value: http://svc-globaltickets-services-discount
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources:
+          limits:
+            cpu: "0.15"
+      imagePullSecrets:
+        - name: acr-secret
