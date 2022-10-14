@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Web", "GlobalTickets.Client\GlobalTickets.Web.csproj", "{0848F9B8-B1CC-412F-9A8C-A09058575A1E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F3632F51-056C-43C5-9E59-8D371E99C8BF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{F3632F51-056C-43C5-9E59-8D371E99C8BF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontends", "Frontends", "{825D4E4F-3BFF-4546-96AB-8AB83D95722D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontends", "frontends", "{825D4E4F-3BFF-4546-96AB-8AB83D95722D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Services.ShoppingBasket", "GlobalTickets.Services.ShoppingBasket\GlobalTickets.Services.ShoppingBasket.csproj", "{CD16338F-F1A0-44F7-834E-7813F3EF63FE}"
 EndProject
@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Services.Disc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Services.Ordering", "GlobalTickets.Services.Order\GlobalTickets.Services.Ordering.csproj", "{A36462E2-CD8A-4D63-BC2D-E4CDB3313A7C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fake", "Fake", "{BEE0F382-1476-489A-9ACA-B4D969B45BDF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fake", "fake", "{BEE0F382-1476-489A-9ACA-B4D969B45BDF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{8BC3B285-5AD7-49A5-AE12-6903C029FEC5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration", "integration", "{8BC3B285-5AD7-49A5-AE12-6903C029FEC5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Integration.MessagingBus", "GlobalTickets.Integration.MessagingBus\GlobalTickets.Integration.MessagingBus.csproj", "{532539E3-8124-49E1-BDAE-8931A42BF7D6}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "External.PaymentGateway", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Services.Payment", "GlobalTickets.Services.Payment\GlobalTickets.Services.Payment.csproj", "{71D77F9F-0A21-4054-BB7C-A9C75062B202}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{C5340063-2075-4208-B77A-2D192BC07552}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateway", "gateway", "{C5340063-2075-4208-B77A-2D192BC07552}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Gateway.WebBff", "GlobalTickets.Gateway.WebBff\GlobalTickets.Gateway.WebBff.csproj", "{883D3C2D-9557-46B7-A993-1CD6117A731A}"
 EndProject
@@ -45,18 +45,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalTickets.Web.Bff", "Gl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".k8s", ".k8s", "{4EDCC06B-3FAC-4B43-8FB0-3FFE2AD21666}"
 	ProjectSection(SolutionItems) = preProject
-		aks-globoticket.gateway.mobilebff.yaml = aks-globoticket.gateway.mobilebff.yaml
-		aks-globoticket.gateway.webbff.yaml = aks-globoticket.gateway.webbff.yaml
-		aks-globoticket.services.discount.yaml = aks-globoticket.services.discount.yaml
-		aks-globoticket.services.eventcatalog.yaml = aks-globoticket.services.eventcatalog.yaml
-		aks-globoticket.services.marketing.yaml = aks-globoticket.services.marketing.yaml
-		aks-globoticket.services.ordering.yaml = aks-globoticket.services.ordering.yaml
-		aks-globoticket.services.payment.yaml = aks-globoticket.services.payment.yaml
-		aks-globoticket.services.shoppingbasket.yaml = aks-globoticket.services.shoppingbasket.yaml
-		aks-globoticket.web.yaml = aks-globoticket.web.yaml
+		aks-globaltickets.gateway.mobilebff.yaml = .k8s\aks-globaltickets.gateway.mobilebff.yaml
+		aks-globaltickets.gateway.webbff.yaml = .k8s\aks-globaltickets.gateway.webbff.yaml
+		aks-globaltickets.services.discount.yaml = .k8s\aks-globaltickets.services.discount.yaml
+		aks-globaltickets.services.eventcatalog.yaml = .k8s\aks-globaltickets.services.eventcatalog.yaml
+		aks-globaltickets.services.marketing.yaml = .k8s\aks-globaltickets.services.marketing.yaml
+		aks-globaltickets.services.ordering.yaml = .k8s\aks-globaltickets.services.ordering.yaml
+		aks-globaltickets.services.payment.yaml = .k8s\aks-globaltickets.services.payment.yaml
+		aks-globaltickets.services.shoppingbasket.yaml = .k8s\aks-globaltickets.services.shoppingbasket.yaml
+		aks-globaltickets.web.yaml = .k8s\aks-globaltickets.web.yaml
+		k8s-deploy-all.txt = .k8s\k8s-deploy-all.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{7F8BD47A-3187-4B42-9B4D-ABB388257160}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{7F8BD47A-3187-4B42-9B4D-ABB388257160}"
 	ProjectSection(SolutionItems) = preProject
 		pipelines\pipeline.gateway.mobilebff.yaml = pipelines\pipeline.gateway.mobilebff.yaml
 		pipelines\pipeline.gateway.webbff.yaml = pipelines\pipeline.gateway.webbff.yaml

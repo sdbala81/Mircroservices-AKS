@@ -1,0 +1,33 @@
+deploy gateways
+=======================================================
+k apply -f aks-globaltickets.gateway.mobilebff.yaml
+k apply -f aks-globaltickets.gateway.webbff.yaml
+
+
+deploy services 
+======================================================
+k apply -f aks-globaltickets.services.discount.yaml
+k apply -f aks-globaltickets.services.eventcatalog.yaml
+
+k apply -f aks-globaltickets.services.shoppingbasket.yaml
+k apply -f aks-globaltickets.services.marketing.yaml
+
+k apply -f aks-globaltickets.services.ordering.yaml
+k apply -f aks-globaltickets.services.payment.yaml
+
+
+deploy web
+======================================================
+k apply -f aks-globaltickets.web.yaml
+
+
+
+
+delete all the services 
+=====================================================
+k delete -f aks-globaltickets.services.discount.yaml
+k delete -f aks-globaltickets.services.eventcatalog.yaml
+k delete -f aks-globaltickets.services.marketing.yaml
+k delete -f aks-globaltickets.services.ordering.yaml
+k delete -f aks-globaltickets.services.payment.yaml
+k delete -f aks-globaltickets.services.shoppingbasket.yaml

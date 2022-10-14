@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: globaltickets-services-marketing
-        image: globoticketacr.azurecr.io/globaltickets.services.marketing:#{Build.BuildId}#
+        image: globalticketsacr.azurecr.io/globaltickets.services.marketing:1 
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-globaltickets-services-payment
+  name: svc-globaltickets-services-ordering
   labels:
     version: dev
-    product: globaltickets-services-payment
+    product: globaltickets-services-ordering
 spec:
   selector:
-    app: globaltickets-services-payment
+    app: globaltickets-services-ordering
   ports:
   - port: 80
     targetPort: 80
@@ -21,38 +21,43 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globaltickets-services-payment
+  name: dep-globaltickets-services-ordering
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: globaltickets-services-payment
+      app: globaltickets-services-ordering
   template:
     metadata:
       labels:
-        app: globaltickets-services-payment
+        app: globaltickets-services-ordering
     spec:
       containers:
-      - name: globaltickets-services-payment
-        image: globoticketacr.azurecr.io/globaltickets.services.payment:#{Build.BuildId}#
+      - name: globaltickets-services-ordering
+        image: globalticketsacr.azurecr.io/globaltickets.services.ordering:1
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_URLS
           value: http://+:80
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom: 
+            secretKeyRef:
+              name: ordering-db
+              key: connectionstring
         - name: ServiceBusConnectionString
           value: Endpoint=sb://globaltickets.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Hi0hqUzgNIhGOcceT/gW4B23fHSlbVM+FPAxjq3zZTc=
-        - name: subscriptionName
-          value: globoticketpayment
+        - name: CheckoutMessageTopic
+          value: checkoutmessage
         - name: OrderPaymentRequestMessageTopic
           value: orderpaymentrequestmessage
         - name: OrderPaymentUpdatedMessageTopic
-          value: orderpaymentupdatedmessage       
+          value: orderpaymentupdatedmessage
         ports:
         - containerPort: 80
         - containerPort: 443
         resources:
           limits:
-            cpu: "0.10"
+            cpu: "0.15"
       imagePullSecrets:
         - name: acr-secret

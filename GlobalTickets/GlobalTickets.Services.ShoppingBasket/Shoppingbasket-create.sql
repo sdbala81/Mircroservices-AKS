@@ -6,7 +6,9 @@ BEGIN
         CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
     );
 END;
+GO
 
+BEGIN TRANSACTION;
 GO
 
 CREATE TABLE [Baskets] (
@@ -14,7 +16,6 @@ CREATE TABLE [Baskets] (
     [UserId] uniqueidentifier NOT NULL,
     CONSTRAINT [PK_Baskets] PRIMARY KEY ([BasketId])
 );
-
 GO
 
 CREATE TABLE [BasketLines] (
@@ -25,16 +26,19 @@ CREATE TABLE [BasketLines] (
     CONSTRAINT [PK_BasketLines] PRIMARY KEY ([BasketLineId]),
     CONSTRAINT [FK_BasketLines_Baskets_BasketId] FOREIGN KEY ([BasketId]) REFERENCES [Baskets] ([BasketId]) ON DELETE CASCADE
 );
-
 GO
 
 CREATE INDEX [IX_BasketLines_BasketId] ON [BasketLines] ([BasketId]);
-
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200630142717_InitialMigration', N'3.1.5');
+VALUES (N'20200630142717_InitialMigration', N'6.0.10');
+GO
 
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
 GO
 
 CREATE TABLE [Events] (
@@ -43,38 +47,48 @@ CREATE TABLE [Events] (
     [Date] datetime2 NOT NULL,
     CONSTRAINT [PK_Events] PRIMARY KEY ([EventId])
 );
-
 GO
 
 CREATE INDEX [IX_BasketLines_EventId] ON [BasketLines] ([EventId]);
-
 GO
 
 ALTER TABLE [BasketLines] ADD CONSTRAINT [FK_BasketLines_Events_EventId] FOREIGN KEY ([EventId]) REFERENCES [Events] ([EventId]) ON DELETE CASCADE;
-
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200711083614_Events', N'3.1.5');
+VALUES (N'20200711083614_Events', N'6.0.10');
+GO
 
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
 GO
 
 ALTER TABLE [BasketLines] ADD [Price] int NOT NULL DEFAULT 0;
-
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200711091215_BasketLinePrice', N'3.1.5');
+VALUES (N'20200711091215_BasketLinePrice', N'6.0.10');
+GO
 
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
 GO
 
 ALTER TABLE [Baskets] ADD [CouponId] uniqueidentifier NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000';
-
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200815084323_CouponIdAddedToBasket', N'3.1.5');
+VALUES (N'20200815084323_CouponIdAddedToBasket', N'6.0.10');
+GO
 
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
 GO
 
 DECLARE @var0 sysname;
@@ -84,12 +98,16 @@ INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [
 WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Baskets]') AND [c].[name] = N'CouponId');
 IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Baskets] DROP CONSTRAINT [' + @var0 + '];');
 ALTER TABLE [Baskets] ALTER COLUMN [CouponId] uniqueidentifier NULL;
-
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200815102156_CouponIdNullable', N'3.1.5');
+VALUES (N'20200815102156_CouponIdNullable', N'6.0.10');
+GO
 
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
 GO
 
 CREATE TABLE [BasketChangeEvents] (
@@ -100,11 +118,12 @@ CREATE TABLE [BasketChangeEvents] (
     [BasketChangeType] int NOT NULL,
     CONSTRAINT [PK_BasketChangeEvents] PRIMARY KEY ([Id])
 );
-
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200815140846_BasketChangeEventAdded', N'3.1.5');
+VALUES (N'20200815140846_BasketChangeEventAdded', N'6.0.10');
+GO
 
+COMMIT;
 GO
 

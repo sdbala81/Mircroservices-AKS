@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-globaltickets-gateway-webbff
+  name: svc-globaltickets-web
   labels:
     version: dev
-    product: globaltickets-gateway-webbff
+    product: globaltickets-web
 spec:
   selector:
-    app: globaltickets-gateway-webbff
+    app: globaltickets-web
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
@@ -21,25 +22,41 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globaltickets-gateway-webbff
+  name: dep-globaltickets-web
 spec:
-  replicas: 1
+  replicas: 10
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   selector:
     matchLabels:
-      app: globaltickets-gateway-webbff
+      app: globaltickets-web
   template:
     metadata:
       labels:
-        app: globaltickets-gateway-webbff
+        app: globaltickets-web
     spec:
       containers:
-      - name: globaltickets-gateway-webbff
-        image: globoticketacr.azurecr.io/globaltickets.gateway.webbff:#{Build.BuildId}#
+      - name: globaltickets-web
+        image: globalticketsacr.azurecr.io/globaltickets.web:1
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ASPNETCORE_URLS
-          value: http://+:80
+          value: http://+:80;https://+:443
+        - name: base64pfxfile
+          valueFrom:
+            secretKeyRef:
+              name: base64pfxfile
+              key: file
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+          valueFrom: 
+            secretKeyRef:
+              name: pfx-password
+              key: pwd
         - name: ApiConfigs__EventCatalog__Uri
           value: http://svc-globaltickets-services-eventcatalog
         - name: ApiConfigs__ShoppingBasket__Uri
@@ -49,7 +66,7 @@ spec:
         - name: ApiConfigs__Order__Uri
           value: http://svc-globaltickets-services-ordering
         - name: ApiConfigs__Marketing__Uri
-          value: http://svc-globaltickets-services-Marketing
+          value: http://svc-globaltickets-services-marketing
         - name: ApiConfigs__Eventcatalog__Uri
           value: http://svc-globaltickets-services-eventcatalog
         - name:  ApiConfigs__Discount__Uri
@@ -59,6 +76,6 @@ spec:
         - containerPort: 443
         resources:
           limits:
-            cpu: "0.10"
+            cpu: "0.15"
       imagePullSecrets:
         - name: acr-secret

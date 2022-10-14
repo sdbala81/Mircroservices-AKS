@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-globaltickets-services-eventcatalog
+  name: svc-globaltickets-services-discount
   labels:
     version: dev
-    product: globaltickets-services-eventcatalog
+    product: globaltickets-services-discount
 spec:
   selector:
-    app: globaltickets-services-eventcatalog
+    app: globaltickets-services-discount
   ports:
   - port: 80
     targetPort: 80
@@ -21,20 +21,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dep-globaltickets-services-eventcatalog
+  name: dep-globaltickets-services-discount
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: globaltickets-services-eventcatalog
+      app: globaltickets-services-discount
   template:
     metadata:
       labels:
-        app: globaltickets-services-eventcatalog
+        app: globaltickets-services-discount
     spec:
       containers:
-      - name: globaltickets-services-eventcatalog
-        image: globoticketacr.azurecr.io/globaltickets.services.eventcatalog:#{Build.BuildId}#
+      - name: globaltickets-services-discount
+        image: globalticketsacr.azurecr.io/globaltickets.services.discount:1
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
@@ -43,7 +43,7 @@ spec:
         - name: ConnectionStrings__DefaultConnection
           valueFrom: 
             secretKeyRef:
-              name: eventcatalog-db
+              name: discount-db
               key: connectionstring
         ports:
         - containerPort: 80

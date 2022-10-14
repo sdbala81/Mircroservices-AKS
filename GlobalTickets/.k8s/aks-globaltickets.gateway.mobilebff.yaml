@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: globaltickets-gateway-mobilebff
-        image: globoticketacr.azurecr.io/globaltickets.gateway.mobilebff:#{Build.BuildId}#
+        image: globalticketsacr.azurecr.io/globaltickets.gateway.mobilebff:1
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
